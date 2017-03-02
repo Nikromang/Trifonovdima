@@ -1,0 +1,221 @@
+№1
+def bfs_fire(graph,start,fired=None):
+    path = {start: 0}
+    if fired is None:
+        fired = set()
+    fired.add(start)
+    Q = [start]
+    while Q: #пока список не пуст
+        current = Q.pop(0)
+        for neighbour in graph[current]:
+            if neighbour not in fired:
+                fired.add(neighbour)
+                Q.append(neighbour)
+                path[neighbour] = path[current]+1
+    for i in range(0,m+1):
+        if i in path:
+            print(path[i])
+            #print(neighbour)
+
+
+def read_graph_as_matrix(n, m):
+    graph = [[0]*n for i in range(n)]
+    for j in range(m):
+        a, b = [int(x) for x in input().split()]
+        c = min(a, b)
+        d = max(a, b)
+        graph[c][d] = d
+        graph[d][c] = c
+    return graph
+
+n, m = [int(x) for x in input().split()]
+A = read_graph_as_matrix(n,m)
+#print(A)
+bfs_fire(A,0)
+
+№2
+def bfs_fire(graph,start,fired=None):
+    path = {start: 0}
+    if fired is None:
+        fired = set()
+    fired.add(start)
+    Q = [start]
+    while Q: #пока список не пуст
+        current = Q.pop(0)
+        for neighbour in graph[current]:
+            if neighbour not in fired:
+                fired.add(neighbour)
+                Q.append(neighbour)
+                path[neighbour] = path[current]+1
+                print(current,neighbour)
+            #print(neighbour)
+
+
+def read_graph_as_matrix(n, m):
+    graph = [[0]*n for i in range(n)]
+    for j in range(m):
+        a, b = [int(x) for x in input().split()]
+        c = min(a, b)
+        d = max(a, b)
+        graph[c][d] = d
+        graph[d][c] = c
+    return graph
+
+n, m = [int(x) for x in input().split()]
+A = read_graph_as_matrix(n,m)
+#print(A)
+bfs_fire(A,1)
+
+№3
+def bfs_fire(graph,start,end,fired=None):
+    time = {start:0}
+    if fired is None:
+        fired = set()
+    fired.add(start)
+    Q = [start]
+    while Q: #пока список не пуст
+        current = Q.pop(0)
+        for neighbour in graph[current]:
+            if neighbour not in fired:
+                fired.add(neighbour)
+                Q.append(neighbour)
+                time[neighbour] = time[current]+1
+    if end in time:
+        print(time[end])
+        #print(neighbour)
+
+
+def read_graph_as_lists(n, m):
+    graph = [[] for i in range(n)]
+    for edge in range(m):
+        a,b = [int(x) for x in input().split()]
+        graph[a].append(b)
+        graph[b].append(a)
+    return graph
+
+n, m, x, y = [int(j) for j in input().split()]
+A = read_graph_as_lists(n,m)
+#print(A)
+bfs_fire(A,x,y)
+
+№4
+def reading(n, m):
+    mass = []
+    for i in range(n):
+        st = input()
+        for j in range(m):
+            if st[j] == ' ':
+                mass.append([i, j])
+    return mass
+
+def read(n, m, x, spisok):
+    graph = [[x]*n for i in range(n)]
+    for j in range(m):
+        c, d = [int(x) for x in spisok[j].split()]
+        a = min(c, d)
+        b = max(c, d)
+        graph[a][b] = b
+        graph[b][a] = a
+    return graph
+
+def bfs(G, start, finish, fired = None):
+    time = {start: 0}
+    if fired is None:
+        fired = set()
+    fired.add(start)
+    Q = [start]
+    while Q:
+        c = Q.pop(0)
+        for n in G[c]:
+            if n not in fired:
+                fired.add(n
+                Q.append(n)
+                time[n] = time[c] + 1
+    if finish in time:
+        print(time[finish])
+    else:
+        print('INF')
+
+n, m = map(int, input().split())
+x = list(map(int, input().split()))
+y = list(map(int, input().split()))
+A = reading(n, m)
+if x not in A or y not in A:
+    print('INF')
+else:
+    x = A.index(x)
+    y = A.index(y)
+    spisok = []
+    for i in A:
+        for di, dj in [(-1, 0), (1,0), (0, -1), (0, 1)]:
+            ni = i[0] + di
+            nj = i[1] + dj
+            if [ni, nj] in A:
+                spisok.append(' '.join([str(A.index(i)), str(A.index([ni, nj]))]))
+    G = read(len(A), len(spisok), x, spisok)
+    bfs(G, x, y)
+    
+№8
+def dijkstra(G, start):
+    d = {v: float('+inf') for v in G}
+    d[start] = 0
+    used = set()
+    while len(used) != len(G):
+        min_d = float('+inf')
+        for v in d:
+            if d[v] < min_d and v not in used:
+                current = v
+                min_d = d[v]
+        used.add(current)
+        for neighbour in G[current]:
+            l = d[current] + G[current][neighbour]
+            if l < d[neighbour]:
+                d[neighbour] = l
+    return d
+
+n, m, s, f = [int(x) for x in input().split()]
+G = {x: {} for x in range(n)}
+for i in range(m):
+    a, b, c = [int(x) for x in input().split()]
+    G[a][b] = c
+    G[b][a] = c
+res = dijkstra(G, s)
+print(res[f])
+
+№10
+def dijkstra(G, start):
+    d = {v: float('+inf') for v in G}
+    d[start] = 0
+    used = set()
+    while len(used) != len(G):
+        min_d = float('+inf')
+        for v in d:
+            if d[v] < min_d and v not in used:
+                current = v
+                min_d = d[v]
+        used.add(current)
+        for neighbour in G[current]:
+            l = d[current] + G[current][neighbour]
+            if l < d[neighbour]:
+                d[neighbour] = l
+    return d
+
+(n, m) = [int(x) for x in input().split()]
+G = {x: {} for x in range(n)}
+for i in range(m):
+    a, b, c = [int(x) for x in input().split()]
+    G[a][b] = c
+    G[b][a] = c
+res1 = float('+inf')
+city = -1
+for x in range(n):
+    res = dijkstra(G, x)
+    tmp = 0
+    for i in range(len(res)):
+        tmp += res[i]
+    res = tmp
+    #print(res)
+    if res < res1:
+        city = x
+        res1 = res
+print(city)
